@@ -1,0 +1,80 @@
+# SPDX-FileCopyrightText: 2026 Thread & Signal LLC
+# SPDX-License-Identifier: Apache-2.0
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "tricorne-engage"
+version = "0.1.0.dev0"
+description = "Tricorne Purple Corner engagement workflow CLI"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [
+    { name = "Charles Russella", email = "crussella0129@gmail.com" },
+]
+keywords = ["security", "pentest", "engagement", "purple-team"]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+]
+
+# Runtime dependencies are intentionally minimal — each one is justified:
+#   typer       CLAUDE.md §4.4 specifies it; wraps click with type hints as
+#               CLI source of truth. In Fedora as python3-typer.
+#   pydantic    CLAUDE.md §4.4 specifies it; one validator for both in-memory
+#               and on-disk JSON schemas. In Fedora as python3-pydantic (v2).
+#   rich        CLAUDE.md §4.4 specifies it; needed for the --dev banner and
+#               scope-decision tables. In Fedora as python3-rich.
+#
+# Deliberately absent:
+#   cryptography  We use stdlib hashlib for SHA-256 / Merkle trees. The
+#                 cryptography library is heavy and pulls in rust build
+#                 tooling at install time — overkill for hashing.
+#   gnupg         We shell out to the `gpg` binary for signing. Every Fedora
+#                 install has it. Avoids a Python-level wrapper library.
+#   pyyaml / toml Strict JSON only (design decision 2026-04-24).
+#   zstandard     stdlib tarfile + gzip is enough for v0.1. Move to zstd when
+#                 we need it.
+dependencies = [
+    "typer >= 0.12",
+    "pydantic >= 2.6",
+    "rich >= 13.7",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest >= 8",
+    "pytest-cov >= 5",
+]
+
+[project.scripts]
+tricorne-engage = "tricorne_engage.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/crussella0129/tricorne"
+Source = "https://github.com/crussella0129/tricorne/tree/main/engage/tricorne-engage"
+Issues = "https://github.com/crussella0129/tricorne/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tricorne_engage"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "N", "SIM"]
+ignore = ["E501"]  # line-length handled by formatter
