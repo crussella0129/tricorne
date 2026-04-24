@@ -8,6 +8,7 @@ Three commands for v0.1 MVP: `new`, `scope`, `seal`. The `log`,
 
 from __future__ import annotations
 
+import hashlib
 import json
 import shutil
 import sys
@@ -16,6 +17,7 @@ from pathlib import Path
 from typing import Optional
 
 import typer
+from pydantic import ValidationError
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
@@ -118,7 +120,7 @@ def new(
             created_at=datetime.now(timezone.utc),
             state=EngagementState.NEW,
         )
-    except Exception as e:
+    except ValidationError as e:
         stderr.print(f"[bold red]error:[/bold red] invalid slug: {e}")
         raise typer.Exit(code=1) from e
 
@@ -199,14 +201,13 @@ def scope(
 
     try:
         parsed = Scope.model_validate_json(scope_file.read_text(encoding="utf-8"))
-    except Exception as e:
+    except (ValidationError, OSError) as e:
         stderr.print(f"[bold red]error:[/bold red] scope file failed validation: {e}")
         raise typer.Exit(code=1) from e
 
     # Copy into the workspace for provenance — the seal will include it.
     shutil.copy2(scope_file, target_scope_path)
 
-    import hashlib
     digest = hashlib.sha256(target_scope_path.read_bytes()).hexdigest()
 
     log_mod.append(
@@ -313,7 +314,7 @@ def seal(
         engagement = Engagement.model_validate_json(
             metadata_path.read_text(encoding="utf-8")
         )
-    except Exception as e:
+    except (ValidationError, OSError) as e:
         stderr.print(f"[bold red]error:[/bold red] corrupt engagement metadata: {e}")
         raise typer.Exit(code=1) from e
 

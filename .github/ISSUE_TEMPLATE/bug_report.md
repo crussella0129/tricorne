@@ -7,6 +7,11 @@ assignees: ''
 ---
 
 <!--
+SPDX-FileCopyrightText: 2026 Thread & Signal LLC
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
+<!--
   Bug reports for Tricorne itself. If you found a bug in an upstream
   packaged tool (nmap, metasploit, etc.), please report it to that
   upstream project — Tricorne packages upstream tools; we do not

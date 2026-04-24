@@ -12,6 +12,7 @@ pinning the chain to a signed moment in time.
 from __future__ import annotations
 
 import hashlib
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -103,7 +104,6 @@ def append(
         fh.write(line)
         fh.write(b"\n")
         fh.flush()
-        import os  # local import — only needed here
         os.fsync(fh.fileno())
 
     return entry

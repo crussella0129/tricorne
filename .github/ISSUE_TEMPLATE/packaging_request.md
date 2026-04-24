@@ -7,6 +7,11 @@ assignees: ''
 ---
 
 <!--
+SPDX-FileCopyrightText: 2026 Thread & Signal LLC
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
+<!--
   Before filing: check CATALOG.md (coming with v0.2) and open issues
   for an existing request. Also run `dnf search <tool>` — if it's
   already in Fedora, we may just need a wrapper package for SELinux

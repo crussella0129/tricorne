@@ -19,20 +19,24 @@ largely just work once the three TODOs are filled in.
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 import os
-import shutil
 import subprocess
 import tarfile
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
+from pydantic import ValidationError
+
 from tricorne_engage import log as log_mod
 from tricorne_engage import paths
 from tricorne_engage.models import (
+    GENESIS_HASH,
     Engagement,
     EngagementState,
+    LogEntry,
     SealManifest,
     SealManifestFile,
 )
@@ -60,9 +64,18 @@ class SealResult:
 def _check_not_dev_tainted(log_path: Path) -> None:
     """Refuse to seal a workspace that has any `mode: "dev"` entries.
 
-    This is the teeth behind `--dev` guard #4 (see README). Scanning
-    the log linearly is fine — seal is a rare operation and logs
-    rarely exceed a few thousand lines.
+    Parses each line as a LogEntry and inspects the typed `mode` field,
+    rather than doing a byte-substring match on the serialized form. The
+    on-disk serialization's whitespace and key order are not
+    contractually stable across pydantic releases or future custom
+    serializers; a substring check could silently false-negative after a
+    dependency bump, or false-positive on an unrelated payload value
+    that happens to contain the literal bytes. This is a security
+    boundary — parse and check the type.
+
+    An unparseable log line is itself evidence of corruption or tamper
+    and causes seal to refuse: a sealed artifact whose audit trail has
+    undeclared gaps is worse than no artifact at all.
     """
     if not log_path.exists():
         return
@@ -71,8 +84,14 @@ def _check_not_dev_tainted(log_path: Path) -> None:
             raw = raw.strip()
             if not raw:
                 continue
-            # Cheap prefix check — avoids full JSON parse for obvious non-matches.
-            if b'"mode":"dev"' in raw or b'"mode": "dev"' in raw:
+            try:
+                entry = LogEntry.model_validate_json(raw)
+            except ValidationError as e:
+                raise SealError(
+                    f"log line {lineno} is unparseable; will not seal a "
+                    f"workspace whose audit trail has been corrupted: {e}"
+                ) from e
+            if entry.mode == "dev":
                 raise SealError(
                     f"workspace contains a dev-mode log entry at line {lineno}; "
                     "dev-tainted workspaces cannot be sealed. "
@@ -182,8 +201,6 @@ def _merkle_root(leaf_hexes: list[str]) -> str:
     returns the GENESIS_HASH sentinel so downstream validators always
     have a 64-char hex string to compare.
     """
-    from tricorne_engage.models import GENESIS_HASH
-
     if not leaf_hexes:
         return GENESIS_HASH
 
@@ -297,7 +314,6 @@ def _make_tarball(source: Path, dest: Path, extra_files: dict[str, bytes]) -> No
             info = tarfile.TarInfo(name=f"{source.name}/{arcpath}")
             info.size = len(content)
             info.mtime = int(datetime.now(timezone.utc).timestamp())
-            import io
             tar.addfile(info, io.BytesIO(content))
 
 

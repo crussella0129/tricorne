@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2026 Thread & Signal LLC
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 # CLAUDE.md — Tricorne Project Instructions for Claude Code
 
 This file tells Claude Code how to work on the Tricorne repository. Read this in full before making any changes.

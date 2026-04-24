@@ -100,9 +100,14 @@ tunable_policy(`tricorne_promisc_capture',`
 ')
 
 # Non-system process introspection for red-team simulation.
+# v0.0.1: only grants the capability. `userdom_ptrace_user_domains` is
+# NOT a refpolicy interface that exists in Fedora's selinux-policy; the
+# correct move once we have real denials is either an explicit
+# `allow tricorne_t <target_type>:process ptrace;` against specific user
+# domains (unpriv_userdomain, user_t), or `userdom_ptrace_unpriv_users`
+# if that interface is still present on the target refpolicy version.
 tunable_policy(`tricorne_proc_introspect',`
     allow tricorne_t self:capability { sys_ptrace };
-    userdom_ptrace_user_domains(tricorne_t)
 ')
 
 # Standard network access: TCP/UDP client sockets.
