@@ -10,7 +10,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 <h1 align="center">Tricorne</h1>
 <p align="center"><strong>A Fedora Remix for offensive security.</strong></p>
-<p align="center"><em>"My treasure? If you want it, I'll let you have it. Seek it out! I left everything at that place!" *Gol D. Roger*</em></p>
+<p align="center"><em>"My treasure? If you want it, I'll let you have it. Seek it out! I left everything at that place!" Gol D. Roger</em></p>
 
 <p align="center">
   <img alt="status" src="https://img.shields.io/badge/status-pre--v0.1-orange">
