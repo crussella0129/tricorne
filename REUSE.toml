@@ -15,3 +15,17 @@ path = "engage/tricorne-engage/examples/**"
 precedence = "aggregate"
 SPDX-FileCopyrightText = "2026 Thread & Signal LLC"
 SPDX-License-Identifier = "Apache-2.0"
+
+# `.gitkeep` marker files. These are zero-byte placeholders whose only
+# purpose is to make git track an otherwise-empty directory; they have
+# no content capable of carrying an inline SPDX header. REUSE 3.3
+# (stricter than 3.2 shipped by fsfe/reuse-action@v4 as of 2026-04-24)
+# requires them to be annotated here. They inherit the packaging-tree
+# license — MIT — because every current `.gitkeep` lives under
+# `packaging/`. If a `.gitkeep` ever appears under `engage/` or
+# `selinux/` this annotation will need to be split.
+[[annotations]]
+path = "**/.gitkeep"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Thread & Signal LLC"
+SPDX-License-Identifier = "MIT"
