@@ -1,0 +1,88 @@
+<!--
+SPDX-FileCopyrightText: 2026 Thread & Signal LLC
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
+# Tricorne Licensing
+
+Tricorne is a **multi-license project**. Different kinds of artifacts carry
+different licenses because a distribution is a bundle of different kinds of
+work. See `DESIGN.md` §11 and `CLAUDE.md` §3.5 for the governance rationale.
+
+## Quick reference
+
+| Artifact class                                      | License                | SPDX ID              |
+|-----------------------------------------------------|------------------------|----------------------|
+| Packaging (RPM specs, kickstarts, build scripts)    | MIT                    | `MIT`                |
+| Original code (`engage/`, Purple Corner tooling)    | Apache License 2.0     | `Apache-2.0`         |
+| SELinux policy modules (`selinux/`)                 | GNU GPL v2 or later    | `GPL-2.0-or-later`   |
+| Artwork, logos, wallpapers (`artwork/`)             | CC BY-SA 4.0 †         | `CC-BY-SA-4.0`       |
+| Documentation (`docs/`, `*.md`)                     | CC BY-SA 4.0           | `CC-BY-SA-4.0`       |
+| Upstream packaged tools (inside tarballs)           | Upstream-owned         | (see each spec file) |
+
+† Artwork is subject to a trademark carve-out: the "Tricorne" name and the
+tricorne logo marks remain trademarks of **Thread & Signal LLC**. The CC-BY-SA
+license grants broad rights to the *content* of the artwork files, not to the
+trademarks. See `TRADEMARK.md`.
+
+## How the licenses are organized
+
+Each license's full text lives in the [`LICENSES/`](LICENSES/) directory as a
+plain-text file named by its SPDX identifier
+(`LICENSES/Apache-2.0.txt`, `LICENSES/MIT.txt`, etc.). This follows the
+[REUSE Specification v3](https://reuse.software/spec/), which Fedora
+packaging is moving toward.
+
+Every source file Tricorne authors carries an SPDX header declaring the
+license that applies to it. For example:
+
+```text
+# SPDX-FileCopyrightText: 2026 Thread & Signal LLC
+# SPDX-License-Identifier: Apache-2.0
+```
+
+Markdown files place the header inside an HTML comment:
+
+```text
+<!--
+SPDX-FileCopyrightText: 2026 Thread & Signal LLC
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+```
+
+Run `reuse lint` at the repo root to verify that every file has a declared
+license.
+
+## Which license applies to which file
+
+- Files under `packaging/`, `metapackages/`, `kickstart/`, `.github/workflows/`,
+  and other build/CI configs → **MIT**
+- Files under `engage/` and any other original code outside `selinux/` →
+  **Apache-2.0**
+- Files under `selinux/` (`.te`, `.fc`, `.if`) → **GPL-2.0-or-later**
+- Files under `artwork/` → **CC-BY-SA-4.0** (plus trademark carve-out)
+- Files under `docs/` and all `*.md` in the repo → **CC-BY-SA-4.0**
+- Upstream tarballs pulled by spec files → each carries its own upstream
+  license; the spec's `License:` tag reflects the installed contents
+
+When a file's SPDX header disagrees with this summary, the SPDX header wins
+and this file should be updated.
+
+## Contributing
+
+By contributing to Tricorne you agree that your contributions are licensed
+under the license applicable to the file(s) you modify, per the table above.
+
+Tricorne uses the [Developer Certificate of Origin](https://developercertificate.org/)
+signed via `git commit -s`. There is no CLA. See `CONTRIBUTING.md`.
+
+## Third-party licenses
+
+When upstream tools are bundled into Tricorne RPMs, their upstream licenses
+apply to their contents unchanged. Each spec file declares the upstream
+license in the `License:` tag. Tricorne's spec file itself is MIT; the RPM
+it builds carries whatever license its installed contents require.
+
+---
+
+*Three corners. One operator.*

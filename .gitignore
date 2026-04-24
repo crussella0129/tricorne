@@ -1,0 +1,124 @@
+# SPDX-FileCopyrightText: 2026 Thread & Signal LLC
+# SPDX-License-Identifier: MIT
+
+# =============================================================================
+# Python (engage/, scope-parsers/, any tooling)
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+.Python
+build/
+dist/
+eggs/
+.eggs/
+sdist/
+wheels/
+*.so
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.pyright_cache/
+.pytype/
+.venv/
+venv/
+env/
+ENV/
+
+# =============================================================================
+# Rust (any engage/ crate, build scripts)
+# =============================================================================
+target/
+**/*.rs.bk
+
+# =============================================================================
+# RPM build artifacts
+# =============================================================================
+*.rpm
+*.src.rpm
+BUILD/
+BUILDROOT/
+RPMS/
+SRPMS/
+SOURCES/*.tar.*
+SOURCES/*.tar
+SOURCES/*.tgz
+SOURCES/*.tbz*
+SOURCES/*.zip
+mock-results/
+/*.log
+*.rpmnew
+*.rpmsave
+
+# =============================================================================
+# SELinux build artifacts
+# =============================================================================
+*.mod
+*.pp
+tmp-selinux/
+
+# =============================================================================
+# ISO / livemedia-creator / kickstart
+# =============================================================================
+*.iso
+*.img
+*.raw
+kickstart/output/
+
+# =============================================================================
+# Editor / OS
+# =============================================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =============================================================================
+# Data hygiene (CLAUDE.md §3.4)
+# NEVER commit captured traffic, cracked hashes, or engagement artifacts.
+# =============================================================================
+*.pcap
+*.pcapng
+*.hccapx
+*.hccap
+*.potfile
+*.pot
+*.ntds
+*.ntds.dit
+*.kirbi
+*.kdbx
+*.ccache
+*.cap
+*.handshake
+engagements/
+loot/
+creds.txt
+credentials.txt
+hashes.txt
+cookies.txt
+targets.txt
+
+# =============================================================================
+# Secrets (NEVER commit)
+# =============================================================================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.keytab
+*.p12
+*.pfx
+secrets/
