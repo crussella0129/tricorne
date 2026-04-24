@@ -6,7 +6,8 @@
 *Author: Charles Russella (Thread & Signal LLC)*
 *Target: Unofficial Fedora Remix → Official Fedora Spin (2-3 year roadmap)*
 
-> *"“My treasure? If you want it, I’ll let you have it. Seek it out! I left everything at that place!” Gol D. Roger, Pirate King"*
+> *“My treasure? If you want it, I’ll let you have it. Seek it out! I left everything at that place!” 
+Gol D. Roger, Pirate King*
 
 ---
 
