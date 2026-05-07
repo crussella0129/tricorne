@@ -4,7 +4,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
 <p align="center">
-  <artwork/Generated Image May 06, 2026 - 11_28PM.png />
+  < artwork/Generated Image May 06, 2026 - 11_28PM.png />
 </p>
 
 <h1 align="center">Tricorne</h1>
