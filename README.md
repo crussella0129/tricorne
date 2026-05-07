@@ -4,8 +4,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
 <p align="center">
-  <!-- artwork/logo-horizontal.svg — coming with v0.1 branding pass -->
-  <em>[logo placeholder — deep-violet tricorne with firebrick cockade; see <code>artwork/</code>]</em>
+  <img width="1024" height="1024" alt="Generated Image May 06, 2026 - 11_28PM" src="https://github.com/user-attachments/assets/da651ff2-b3f5-4157-b87a-960b7d353c1f" />
 </p>
 
 <h1 align="center">Tricorne</h1>
