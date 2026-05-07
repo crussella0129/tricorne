@@ -4,7 +4,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
 <p align="center">
-  < artwork/Tricorne Logo />
+  <img src="artwork/Tricorne Logo" alt=Tricorne Logo width=50% height =50% />
 </p>
 
 <h1 align="center">Tricorne</h1>
